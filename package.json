@@ -1,7 +1,7 @@
 {
   "name": "yourclass-feedback",
   "version": "0.1.0",
-  "homepage": "https://AIL-R.github.io/yourclass-feedback",
+  "homepage": "https://AIL-R.github.io/reaction",
   "private": true,
   "dependencies": {
     "@testing-library/dom": "^10.4.0",
