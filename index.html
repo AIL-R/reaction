@@ -1,16 +1,28 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
-    <meta charset="utf-8" />
-    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#1890ff" />
-    <title>东北育才沈抚示范学校家校互动平台</title>
-    <link href="/reaction/static/css/main.[hash].css" rel="stylesheet">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#1890ff" />
+  <title>东北育才沈抚示范学校家校互动平台</title>
+  <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+  <link href="/reaction/static/css/main.26869d1d.css" rel="stylesheet">
 </head>
+
 <body>
-    <div id="root"></div>
-    <!-- 预加载音乐 -->
-    <audio id="bgm" src="/reaction/static/media/bgm.mp3" loop></audio>
+  <div id="root"></div>
+
+  <!-- 放置背景音乐 -->
+  <audio id="bgm1" src="/reaction/static/media/Thinking out Loud.mp3" loop autoplay></audio>
+ 
+
+  <script>
+    // 随机播放背景音乐
+    const audios = ["bgm1"];
+    const randomIndex = Math.floor(Math.random() * audios.length);
+    document.getElementById(audios[randomIndex]).play();
+  </script>
 </body>
+
 </html>

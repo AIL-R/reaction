@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Howl } from 'howler';
+import { Howl,Howler } from 'howler';
 import { FaPlay, FaPause, FaVolumeUp } from 'react-icons/fa';
 
 const MusicPlayer = () => {
