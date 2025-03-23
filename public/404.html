@@ -9,6 +9,10 @@
     <!-- 引入脚本文件 -->
     <script defer="defer" src="static/js/main.df7458f0.js"></script>
   </head>
+  <script>
+    sessionStorage.redirect = location.href;
+    location.replace(location.href.replace(/\/reaction\/.*/, '/reaction/'));
+  </script>
   <body>
     <div id="root"></div>
   </body>
