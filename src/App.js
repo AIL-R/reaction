@@ -1,7 +1,10 @@
+// src/App.js
 import React, { useState, useEffect } from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom"; // 注意这里引入了 Routes
 import './App.css';  // 引入 CSS 样式
+import NewPage from './NewPage'; // 新增的新页面
 
-const App = () => {
+const NewHomePage = () => {
   const [students, setStudents] = useState([]);
   const [audio, setAudio] = useState(null);
 
@@ -64,5 +67,26 @@ const App = () => {
     </div>
   );
 };
+
+const OldHomePage = () => (
+  <div>
+    <h1>欢迎来到旧版平台</h1>
+    <div className="version-switcher">
+      <a href="/v2">体验新版</a>
+    </div>
+  </div>
+);
+
+function App() {
+  return (
+    <Router basename="/v2">
+      <Routes> {/* 使用 Routes 代替 Switch */}
+        <Route exact path="/" element={<OldHomePage />} /> {/* 使用 element 属性来渲染组件 */}
+        <Route path="/v2" element={<NewHomePage />} /> {/* 新版页面 */}
+        <Route path="/newpage" element={<NewPage />} /> {/* 新增的新页面 */}
+      </Routes>
+    </Router>
+  );
+}
 
 export default App;
