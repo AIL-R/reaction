@@ -1,11 +1,9 @@
-const path = require('path'); // 需添加 path 模块引用
-
 module.exports = {
   webpack: {
     configure: (webpackConfig) => {
-      // 修改公共路径
+      // 修改公共路径，确保静态资源路径为 /reaction/
       webpackConfig.output.publicPath = '/reaction/';
-      
+
       return webpackConfig;
     }
   }
