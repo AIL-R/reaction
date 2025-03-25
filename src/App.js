@@ -1,11 +1,6 @@
 // src/App.js
 import React, { useState, useEffect } from "react";
-import { 
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Link 
-} from "react-router-dom";
+import { BrowserRouter as Router } from 'react-router-dom';
 import './App.css';
 import NewPage from './NewPage';
 
@@ -15,7 +10,7 @@ const NewHomePage = () => {
   const [isPlaying, setIsPlaying] = useState(false);
 
   useEffect(() => {
-    // 模拟API请求（使用PUBLIC_URL保证路径正确）
+    // 使用 PUBLIC_URL 确保 API 路径正确
     fetch(`${process.env.PUBLIC_URL}/api/students`)
       .then((response) => response.json())
       .then((data) => setStudents(data))
@@ -32,7 +27,9 @@ const NewHomePage = () => {
       const randomIndex = Math.floor(Math.random() * audios.length);
       const audioFile = new Audio(audios[randomIndex]);
       audioFile.loop = true;
-      audioFile.play();
+      audioFile.play().catch((error) => {
+        console.error("播放失败:", error);
+      });
       setAudio(audioFile);
       setIsPlaying(true);
       document.removeEventListener('click', handleFirstClick);
@@ -43,6 +40,7 @@ const NewHomePage = () => {
     return () => {
       if (audio) {
         audio.pause();
+        audio.src = ""; // 释放音频资源
       }
       document.removeEventListener('click', handleFirstClick);
     };
@@ -68,7 +66,8 @@ const NewHomePage = () => {
         <section className="student-list">
           <h2>学生列表</h2>
           <div className="version-switcher">
-            <Link to="/">返回旧版</Link>
+            {/* 使用绝对路径返回旧版 */}
+            <Link to={`${process.env.PUBLIC_URL}/`}>返回旧版</Link>
           </div>
           <ul>
             {students.length === 0 ? (
@@ -98,7 +97,8 @@ const OldHomePage = () => (
   <div className="legacy-container">
     <h1>欢迎使用旧版平台</h1>
     <div className="version-switcher">
-      <Link to="/v2">点击体验新版系统</Link>
+      {/* 直接跳转到 basename 根路径 */}
+      <Link to="/">点击体验新版系统</Link>
     </div>
     <div className="notice">
       <p>旧版系统将于2025年12月31日停止维护</p>
@@ -108,12 +108,8 @@ const OldHomePage = () => (
 
 function App() {
   return (
-    <Router basename={process.env.PUBLIC_URL}>
-      <Routes>
-        <Route path="/" element={<OldHomePage />} />
-        <Route path="/v2" element={<NewHomePage />} />
-        <Route path="/newpage" element={<NewPage />} />
-      </Routes>
+    <Router basename="/reaction">
+      {/* 其他路由配置 */}
     </Router>
   );
 }
