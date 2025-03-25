@@ -1,60 +1,86 @@
 // src/App.js
 import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom"; // 注意这里引入了 Routes
-import './App.css';  // 引入 CSS 样式
-import NewPage from './NewPage'; // 新增的新页面
+import { 
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Link 
+} from "react-router-dom";
+import './App.css';
+import NewPage from './NewPage';
 
 const NewHomePage = () => {
   const [students, setStudents] = useState([]);
   const [audio, setAudio] = useState(null);
+  const [isPlaying, setIsPlaying] = useState(false);
 
-  // 模拟API请求获取学生数据
   useEffect(() => {
-    // 获取学生数据
-    fetch('/api/students')
+    // 模拟API请求（使用PUBLIC_URL保证路径正确）
+    fetch(`${process.env.PUBLIC_URL}/api/students`)
       .then((response) => response.json())
       .then((data) => setStudents(data))
       .catch((error) => {
         console.error("数据加载失败", error);
-        setStudents([{ id: 1, name: "测试学生" }]); // 如果请求失败，展示默认数据
+        setStudents([{ id: 1, name: "测试学生" }]);
       });
 
-    // 随机播放背景音乐
     const audios = [
-      "/static/media/Thinking out Loud.mp3", // 音乐文件路径
-      // 你可以添加更多的背景音乐文件
+      `${process.env.PUBLIC_URL}/static/media/Thinking out Loud.mp3`,
     ];
 
-    const randomIndex = Math.floor(Math.random() * audios.length);
-    const audioFile = new Audio(audios[randomIndex]);
-    audioFile.loop = true; // 设置音乐循环播放
-    audioFile.play(); // 播放音乐
-    setAudio(audioFile); // 保存音频实例，以便后续停止播放
+    const handleFirstClick = () => {
+      const randomIndex = Math.floor(Math.random() * audios.length);
+      const audioFile = new Audio(audios[randomIndex]);
+      audioFile.loop = true;
+      audioFile.play();
+      setAudio(audioFile);
+      setIsPlaying(true);
+      document.removeEventListener('click', handleFirstClick);
+    };
 
-    // 清理副作用，确保在组件卸载时停止音乐
+    document.addEventListener('click', handleFirstClick);
+
     return () => {
       if (audio) {
-        audio.pause(); // 停止播放
+        audio.pause();
       }
+      document.removeEventListener('click', handleFirstClick);
     };
-  }, []); // 只在组件加载时执行一次
+  }, []);
 
   return (
     <div className="app-container">
       <header className="app-header">
-        <img src="/static/images/logo.png" alt="育才logo" className="logo" />
+        <img 
+          src={`${process.env.PUBLIC_URL}/static/images/logo.png`} 
+          alt="育才logo" 
+          className="logo" 
+        />
         <h1>东北育才沈抚示范学校家校互动平台</h1>
+        {!isPlaying && (
+          <div className="audio-guide">
+            <span>点击页面任意位置启用背景音乐</span>
+          </div>
+        )}
       </header>
 
       <main className="main-content">
         <section className="student-list">
           <h2>学生列表</h2>
+          <div className="version-switcher">
+            <Link to="/">返回旧版</Link>
+          </div>
           <ul>
             {students.length === 0 ? (
-              <p>正在加载学生数据...</p>
+              <p className="loading">正在加载学生数据...</p>
             ) : (
               students.map((student) => (
-                <li key={student.id}>{student.name}</li>
+                <li key={student.id} className="student-card">
+                  <div className="student-info">
+                    <span className="student-id">学号：{student.id}</span>
+                    <span className="student-name">{student.name}</span>
+                  </div>
+                </li>
               ))
             )}
           </ul>
@@ -69,21 +95,24 @@ const NewHomePage = () => {
 };
 
 const OldHomePage = () => (
-  <div>
-    <h1>欢迎来到旧版平台</h1>
+  <div className="legacy-container">
+    <h1>欢迎使用旧版平台</h1>
     <div className="version-switcher">
-      <a href="/v2">体验新版</a>
+      <Link to="/v2">点击体验新版系统</Link>
+    </div>
+    <div className="notice">
+      <p>旧版系统将于2025年12月31日停止维护</p>
     </div>
   </div>
 );
 
 function App() {
   return (
-    <Router basename="/v2">
-      <Routes> {/* 使用 Routes 代替 Switch */}
-        <Route exact path="/" element={<OldHomePage />} /> {/* 使用 element 属性来渲染组件 */}
-        <Route path="/v2" element={<NewHomePage />} /> {/* 新版页面 */}
-        <Route path="/newpage" element={<NewPage />} /> {/* 新增的新页面 */}
+    <Router basename={process.env.PUBLIC_URL}>
+      <Routes>
+        <Route path="/" element={<OldHomePage />} />
+        <Route path="/v2" element={<NewHomePage />} />
+        <Route path="/newpage" element={<NewPage />} />
       </Routes>
     </Router>
   );

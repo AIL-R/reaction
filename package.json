@@ -1,24 +1,28 @@
 {
   "name": "yourclass-feedback",
-  "version": "0.1.0",
-  "homepage": "https://air.github.io/reaction",
+  "version": "0.2.0",
+  "homepage": "https://air-r.github.io/reaction/v2",
   "private": true,
   "dependencies": {
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.6.3",
-    "@testing-library/react": "^16.2.0",
+    "@testing-library/react": "^18.2.0",
     "@testing-library/user-event": "^14.5.0",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
-    "react-router-dom": "^7.4.0",
+    "animate.css": "^4.1.1",
+    "framer-motion": "^10.16.0",
+    "howler": "^2.2.3",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-icons": "^4.12.0",
+    "react-router-dom": "^6.23.1",
     "react-scripts": "5.0.1",
     "web-vitals": "^2.1.4",
-    "workbox-webpack-plugin": "6.6.0"
+    "workbox-webpack-plugin": "^6.6.0"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
+    "start": "craco start",
+    "build": "GENERATE_SOURCEMAP=false craco build",
+    "test": "craco test",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build -b gh-pages"
@@ -27,7 +31,8 @@
     "production": [
       ">0.2%",
       "not dead",
-      "not op_mini all"
+      "not op_mini all",
+      "not IE 11"
     ],
     "development": [
       "last 1 chrome version",
@@ -36,10 +41,14 @@
     ]
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "5.62.0",
-    "@typescript-eslint/parser": "5.62.0",
-    "eslint": "8.57.1",
-    "gh-pages": "6.3.0",
-    "svgo": "3.3.2"
+    "@craco/craco": "^7.1.0",
+    "@typescript-eslint/eslint-plugin": "^5.62.0",
+    "@typescript-eslint/parser": "^5.62.0",
+    "eslint": "^8.57.1",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-react": "^7.34.0",
+    "gh-pages": "^6.3.0",
+    "postcss-preset-env": "^9.3.0",
+    "svgo": "^3.3.2"
   }
 }
