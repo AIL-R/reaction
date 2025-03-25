@@ -10,6 +10,21 @@
   <link href="/reaction/static/css/main.26869d1d.css" rel="stylesheet"> <!-- 修改静态资源路径 -->
 </head>
 
+<body>
+  <div id="root"></div>
 
+  <!-- 音频标签 -->
+  <audio id="audio" src="/reaction/static/media/Thinking out Loud.mp3" preload="auto"></audio>
+
+  <!-- 播放按钮 -->
+  <button onclick="playAudio()">播放音乐</button>
+
+  <script>
+    function playAudio() {
+      var audio = document.getElementById('audio');
+      audio.play();
+    }
+  </script>
+</body>
 
 </html>
