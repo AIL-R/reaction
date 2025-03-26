@@ -1,13 +1,12 @@
 // src/App.js
 import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router } from 'react-router-dom';
+import { BrowserRouter as Router, Link } from 'react-router-dom';
 import './App.css';
 import NewPage from './NewPage';
 
 const NewHomePage = () => {
   const [students, setStudents] = useState([]);
-  const [audio, setAudio] = useState(null);
-  const [isPlaying, setIsPlaying] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);  // 修复：添加 isPlaying 状态
 
   useEffect(() => {
     // 使用 PUBLIC_URL 确保 API 路径正确
@@ -19,32 +18,8 @@ const NewHomePage = () => {
         setStudents([{ id: 1, name: "测试学生" }]);
       });
 
-    const audios = [
-      `${process.env.PUBLIC_URL}/static/media/Thinking out Loud.mp3`,
-    ];
-
-    const handleFirstClick = () => {
-      const randomIndex = Math.floor(Math.random() * audios.length);
-      const audioFile = new Audio(audios[randomIndex]);
-      audioFile.loop = true;
-      audioFile.play().catch((error) => {
-        console.error("播放失败:", error);
-      });
-      setAudio(audioFile);
-      setIsPlaying(true);
-      document.removeEventListener('click', handleFirstClick);
-    };
-
-    document.addEventListener('click', handleFirstClick);
-
-    return () => {
-      if (audio) {
-        audio.pause();
-        audio.src = ""; // 释放音频资源
-      }
-      document.removeEventListener('click', handleFirstClick);
-    };
-  }, []);
+    // 修复：没有音频播放相关代码，可以添加其他副作用逻辑
+  }, []); // 修复：useEffect 依赖项为空数组，确保只在组件挂载时执行
 
   return (
     <div className="app-container">
@@ -109,6 +84,7 @@ const OldHomePage = () => (
 function App() {
   return (
     <Router basename="/reaction">
+      <NewHomePage /> {/* 修复：渲染 NewHomePage 组件 */}
       {/* 其他路由配置 */}
     </Router>
   );
