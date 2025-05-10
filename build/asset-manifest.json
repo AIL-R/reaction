@@ -1,0 +1,11 @@
+{
+  "files": {
+    "main.css": "/reaction/v2/static/css/main.2ec16e39.css",
+    "main.js": "/reaction/v2/static/js/main.a1bb6801.js",
+    "index.html": "/reaction/v2/index.html"
+  },
+  "entrypoints": [
+    "static/css/main.2ec16e39.css",
+    "static/js/main.a1bb6801.js"
+  ]
+}

@@ -1,12 +1,6 @@
 {
   "short_name": "YourClassFeedback",
   "name": "Your Class Feedback Application",
-  "icons": [
-    {
-      "sizes": "192x192",
-      "type": "image/png"
-    }
-  ],
   "start_url": ".",
   "display": "standalone"
 }
